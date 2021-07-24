@@ -2,7 +2,6 @@
 
 import http from 'http';
 import express from 'express';
-import bodyParser from 'body-parser';
 import logging from './config/logging';
 import config from './config/config';
 
@@ -19,7 +18,7 @@ const router = express();
 router.use((req, res, next) => {
     //logging info of whats being requested
     logging.info(NAMESPACE, `METHOD - [${req.method}], URL - [${req.url}], IP - [${req.socket.remoteAddress}]`);
-    //access response through middleware
+    //access response through middleware, listener for when response is finished
     res.on('finish', () => {
         logging.info(NAMESPACE, `METHOD - [${req.method}], URL - [${req.url}], IP - [${req.socket.remoteAddress}]`);
     });
@@ -29,8 +28,10 @@ router.use((req, res, next) => {
 
 /** Parse the request */
 //after logging, we need to parse the body of the request using bodyParser
-router.use(bodyParser.urlencoded({ extended: false }));
-router.use(bodyParser.json());
+
+//because express now has a bodyParser, we actually dont need to import bodyParser anymore
+router.use(express.urlencoded({ extended: false }));
+router.use(express.json());
 
 /** Rules of API */
 router.use((req, res, next) => {
