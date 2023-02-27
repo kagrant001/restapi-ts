@@ -1,4 +1,4 @@
-# Project Configuration (mostle terminal commands)
+# Project Configuration (mostly terminal commands)
 
 we start with some basic terminal commands just to import all of the packages and get the project backbone.
 
